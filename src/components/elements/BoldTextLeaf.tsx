@@ -1,5 +1,5 @@
 // Define
-const BoldTextLeaf = (props) => {
+const BoldTextLeaf = (props: any) => {
   return (
     <span
       {...props.attributes}

@@ -1,36 +1,36 @@
 import { Editor, Text, Transforms } from "slate";
 export const CustomEditor = {
-  isBoldMarkActive(editor) {
+  isBoldMarkActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === true,
+      match: (n: any) => n.type === true,
       universal: true,
     });
     return !!match;
   },
-  isCodeBlockActive(editor) {
+  isCodeBlockActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === "code",
+      match: (n: any) => n.type === "code",
     });
     return !!match;
   },
-  toggleBoldMark(editor) {
+  toggleBoldMark(editor: any) {
     const isActive = this.isBoldMarkActive(editor);
-    Transforms.setNodes(
+    Transforms.setNodes<any>(
       editor,
       { bold: isActive ? null : true },
       {
-        match: (n) => Text.isText(n),
+        match: (n: any) => Text.isText(n),
         split: true,
       }
     );
   },
-  toggleCodeBlock(editor) {
+  toggleCodeBlock(editor: any) {
     const isActive = this.isCodeBlockActive(editor);
-    Transforms.setNodes(
+    Transforms.setNodes<any>(
       editor,
       { type: isActive ? null : "code" },
       {
-        match: (n) => Editor.isBlock(editor, n),
+        match: (n: any) => Editor.isBlock(editor, n),
       }
     );
   },

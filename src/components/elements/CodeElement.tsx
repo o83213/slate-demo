@@ -1,5 +1,5 @@
 // Define a React component renderer for our code blocks
-const CodeElement = (props) => {
+const CodeElement = (props: any) => {
   return (
     <pre {...props.attributes}>
       <code>{props.children}</code>
