@@ -1,0 +1,2 @@
+Types
+Use hybrid rules - Model-based with component-base and global scope!

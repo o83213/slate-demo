@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useMemo } from "react";
-// Import the Slate editor factory
 import { createEditor } from "slate";
-// Import the slate components and React plugin
 import { Slate, Editable, withReact } from "slate-react";
+import { withHistory } from "slate-history";
 // Import the custom element
 import DefaultElement from "./elements/DefaultElement";
 import CodeElement from "./elements/CodeElement";
@@ -11,9 +10,9 @@ import BoldTextLeaf from "./elements/BoldTextLeaf";
 import { CustomEditor } from "../util/CustomEditor";
 // helper function to extract plain text
 import { plainTextHelper } from "../util/plainTextHelper";
-const DemoEditor = (props) => {
+const DemoEditor = () => {
   // Create a Slate editor object that won't change across renders
-  const [editor] = useState(() => withReact(createEditor()));
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   // get the initial value
   const initialValue = useMemo(() => {
     const localStorageContent = localStorage.getItem("content");
@@ -28,7 +27,7 @@ const DemoEditor = (props) => {
     return data;
   }, []);
   //
-  const renderElement = useCallback((props) => {
+  const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       case "code":
         return <CodeElement {...props} />;
@@ -37,13 +36,13 @@ const DemoEditor = (props) => {
     }
   }, []);
   //
-  const renderLeaf = useCallback((props) => {
+  const renderLeaf = useCallback((props: any) => {
     return <BoldTextLeaf {...props} />;
   }, []);
   return (
     <Slate
       editor={editor}
-      value={initialValue}
+      value={[]}
       onChange={(value) => {
         const isAstChange = editor.operations.some(
           (op) => op.type !== "set_selection"

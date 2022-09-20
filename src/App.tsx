@@ -1,10 +1,10 @@
 import React from "react";
-// import Editor from "./components/Editor";
+import Editor from "./components/Editor";
+import RichTextExample from "./components/Editor2";
 const App = () => {
   return (
     <div className="App">
-      {/* <Editor /> */}
-      123
+      <RichTextExample />
     </div>
   );
 };
