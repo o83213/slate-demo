@@ -22,17 +22,6 @@ export type BulletedListElement = {
   children: Descendant[];
 };
 
-export type CheckListItemElement = {
-  type: "check-list-item";
-  checked: boolean;
-  children: Descendant[];
-};
-
-export type EditableVoidElement = {
-  type: "editable-void";
-  children: EmptyText[];
-};
-
 export type HeadingElement = {
   type: "heading";
   align?: string;
@@ -44,6 +33,14 @@ export type HeadingTwoElement = {
   align?: string;
   children: Descendant[];
 };
+export type EditableVoidElement = {
+  type: "editable-void";
+  children: EmptyText[];
+};
+export type ListItemElement = {
+  type: "list-item";
+  children: Descendant[];
+};
 
 export type ImageElement = {
   type: "image";
@@ -51,11 +48,14 @@ export type ImageElement = {
   children: EmptyText[];
 };
 
+export type CheckListItemElement = {
+  type: "check-list-item";
+  checked: boolean;
+  children: Descendant[];
+};
 export type LinkElement = { type: "link"; url: string; children: Descendant[] };
 
 export type ButtonElement = { type: "button"; children: Descendant[] };
-
-export type ListItemElement = { type: "list-item"; children: Descendant[] };
 
 export type MentionElement = {
   type: "mention";
@@ -85,10 +85,10 @@ export type VideoElement = {
 type CustomElement =
   | BlockQuoteElement
   | BulletedListElement
-  | CheckListItemElement
-  | EditableVoidElement
   | HeadingElement
   | HeadingTwoElement
+  | CheckListItemElement
+  | EditableVoidElement
   | ImageElement
   | LinkElement
   | ButtonElement
@@ -121,4 +121,9 @@ declare module "slate" {
     Element: CustomElement;
     Text: CustomText & EmptyText;
   }
+}
+
+declare module "*.module.css" {
+  const classes: { [key: string]: string };
+  export default classes;
 }

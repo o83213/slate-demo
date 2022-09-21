@@ -5,7 +5,7 @@
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     /* Visit https://aka.ms/tsconfig to read more about this file */
-
+    // "plugins": [{ "name": "typescript-plugin-css-modules" }],
     /* Projects */
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
     // "composite": true,                                /* Enable constraints that allow a TypeScript project to be used with project references. */

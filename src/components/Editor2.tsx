@@ -25,11 +25,25 @@ const HOTKEYS: HotKeyType = {
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
-const TEXT_STYLE_TYPES = ["bold", "italic", "code", "underline"];
+
+interface ElementProps {
+  attributes: any;
+  children: React.ReactNode;
+  element: SlateElement;
+}
+
+interface LeafProps {
+  attributes: any;
+  children: React.ReactNode;
+  leaf: SlateText;
+}
 
 const RichTextExample = () => {
-  const renderElement = useCallback((props: any) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
+  const renderElement = useCallback(
+    (props: ElementProps) => <Element {...props} />,
+    []
+  );
+  const renderLeaf = useCallback((props: LeafProps) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   return (
@@ -57,7 +71,7 @@ const RichTextExample = () => {
         autoFocus
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event as any)) {
+            if (isHotkey(hotkey, event)) {
               event.preventDefault();
               const mark = HOTKEYS[hotkey];
               toggleMark(editor, mark);
@@ -104,7 +118,7 @@ const toggleBlock = (editor: Editor, format: any) => {
 
 const toggleMark = (editor: Editor, format: string) => {
   const isActive = isMarkActive(editor, format);
-
+  console.log(isActive);
   if (isActive) {
     Editor.removeMark(editor, format);
   } else {
@@ -119,20 +133,23 @@ const isBlockActive = (editor: Editor, format: string, blockType = "type") => {
   const [match] = Array.from(
     Editor.nodes(editor, {
       at: Editor.unhangRange(editor, selection),
-      match: (n) =>
-        !Editor.isEditor(n) &&
-        SlateElement.isElement(n) &&
-        // n[blockType] === format,
-        n["type"] === format,
+      match: (n) => {
+        let node = n as any;
+        return (
+          !Editor.isEditor(n) &&
+          SlateElement.isElement(n) &&
+          node[blockType] === format
+        );
+      },
     })
   );
 
   return !!match;
 };
 const isMarkActive = (editor: Editor, format: string) => {
-  const marks = Editor.marks(editor);
-  // return marks ? marks[format] === true : false;
-  return false;
+  const marks = Editor.marks(editor) as any;
+  console.log("marks", marks);
+  return marks ? marks[format] === true : false;
 };
 
 const Element = ({ attributes, children, element }: any) => {
@@ -183,7 +200,7 @@ const Element = ({ attributes, children, element }: any) => {
   }
 };
 
-const Leaf = ({ attributes, children, leaf }: any) => {
+const Leaf = ({ attributes, children, leaf }: LeafProps) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -212,7 +229,7 @@ const BlockButton = ({ format, icon }: any) => {
         format,
         TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
       )}
-      onMouseDown={(event: any) => {
+      onMouseDown={(event: React.MouseEvent) => {
         event.preventDefault();
         toggleBlock(editor, format);
       }}
@@ -227,7 +244,7 @@ const MarkButton = ({ format, icon }: any) => {
   return (
     <Button
       active={isMarkActive(editor, format)}
-      onMouseDown={(event: any) => {
+      onMouseDown={(event: React.MouseEvent) => {
         event.preventDefault();
         toggleMark(editor, format);
       }}
