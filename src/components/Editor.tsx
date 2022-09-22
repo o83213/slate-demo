@@ -1,95 +1,109 @@
-import React, { useState, useCallback, useMemo } from "react";
-import { createEditor } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
+import React, { useCallback, useMemo } from "react";
+import { Editable, withReact, useSlate, Slate } from "slate-react";
+import {
+  createEditor,
+  Element as SlateElement,
+  Text as SlateText,
+} from "slate";
+import { isHotkey } from "is-hotkey";
 import { withHistory } from "slate-history";
-// Import the custom element
-import DefaultElement from "./elements/DefaultElement";
-import CodeElement from "./elements/CodeElement";
-import BoldTextLeaf from "./elements/BoldTextLeaf";
-// Import custom editor helper function
-import { CustomEditor } from "../util/CustomEditor";
-// helper function to extract plain text
-import { plainTextHelper } from "../util/plainTextHelper";
-const DemoEditor = () => {
-  // Create a Slate editor object that won't change across renders
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  // get the initial value
+
+import { Toolbar } from "./BaseComponents";
+import { defaultValue } from "../data/defaultValue";
+import { plainTextHelper } from "../plugins/helpers/plainTextHelper";
+import { toggleMark } from "../plugins/helpers/toggleMark";
+import CustomElement from "./Custom/CustomElement";
+import CustomLeaf from "./Custom/CustomLeaf";
+
+import BlockButton from "./Button/BlockButton";
+import MarkButton from "./Button/MarkButton";
+interface HotKeyType {
+  [key: string]: string;
+}
+const HOTKEYS: HotKeyType = {
+  "mod+b": "bold",
+  "mod+i": "italic",
+  "mod+u": "underline",
+  "mod+`": "code",
+};
+
+interface ElementProps {
+  attributes: any;
+  children: React.ReactNode;
+  element: SlateElement;
+}
+
+interface LeafProps {
+  attributes: any;
+  children: React.ReactNode;
+  leaf: SlateText;
+}
+const RichTextExample = () => {
+  const renderElement = useCallback(
+    (props: ElementProps) => <CustomElement {...props} />,
+    []
+  );
+  const renderLeaf = useCallback(
+    (props: LeafProps) => <CustomLeaf {...props} />,
+    []
+  );
+  const editor = useMemo(() => {
+    return withHistory(withReact(createEditor()));
+  }, []);
   const initialValue = useMemo(() => {
     const localStorageContent = localStorage.getItem("content");
     const data = localStorageContent
-      ? plainTextHelper.deserialize(localStorageContent)
-      : [
-          {
-            type: "paragraph",
-            children: [{ text: "A line of text in a paragraph." }],
-          },
-        ];
+      ? JSON.parse(localStorageContent)
+      : defaultValue;
     return data;
-  }, []);
-  //
-  const renderElement = useCallback((props: any) => {
-    switch (props.element.type) {
-      case "code":
-        return <CodeElement {...props} />;
-      default:
-        return <DefaultElement {...props} />;
-    }
-  }, []);
-  //
-  const renderLeaf = useCallback((props: any) => {
-    return <BoldTextLeaf {...props} />;
   }, []);
   return (
     <Slate
       editor={editor}
-      value={[]}
+      value={initialValue}
       onChange={(value) => {
         const isAstChange = editor.operations.some(
           (op) => op.type !== "set_selection"
         );
         if (isAstChange) {
-          const content = plainTextHelper.serialize(value);
+          const content = JSON.stringify(value);
           localStorage.setItem("content", content);
         }
       }}
     >
-      <div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            CustomEditor.toggleBoldMark(editor);
-          }}
-        >
-          Bold!
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            CustomEditor.toggleCodeBlock(editor);
-          }}
-        >
-          Code!
-        </button>
-      </div>
+      <Toolbar>
+        <MarkButton format="bold" icon="format_bold" />
+        <MarkButton format="italic" icon="format_italic" />
+        <MarkButton format="underline" icon="format_underlined" />
+        <MarkButton format="code" icon="code" />
+        <BlockButton format="heading-one" icon="looks_one" />
+        <BlockButton format="heading-two" icon="looks_two" />
+        <BlockButton format="block-quote" icon="format_quote" />
+        <BlockButton format="numbered-list" icon="format_list_numbered" />
+        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+        <BlockButton format="left" icon="format_align_left" />
+        <BlockButton format="center" icon="format_align_center" />
+        <BlockButton format="right" icon="format_align_right" />
+        <BlockButton format="justify" icon="format_align_justify" />
+      </Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
+        placeholder="Enter some rich text…"
+        spellCheck
+        autoFocus
         onKeyDown={(event) => {
-          if (!event.ctrlKey) return;
-          switch (event.key) {
-            case "`":
+          for (const hotkey in HOTKEYS) {
+            if (isHotkey(hotkey, event)) {
               event.preventDefault();
-              CustomEditor.toggleCodeBlock(editor);
-              break;
-            case "b":
-              event.preventDefault();
-              CustomEditor.toggleBoldMark(editor);
-              break;
-            default:
+              const mark = HOTKEYS[hotkey];
+              toggleMark(editor, mark);
+            }
           }
         }}
       />
     </Slate>
   );
 };
-export default DemoEditor;
+
+export default RichTextExample;

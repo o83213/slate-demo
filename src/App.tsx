@@ -1,6 +1,5 @@
 import React from "react";
-import Editor from "./components/Editor";
-import RichTextExample from "./components/Editor2";
+import RichTextExample from "./components/Editor";
 const App = () => {
   return (
     <div className="App">
