@@ -13,15 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "@emotion/css": "^11.10.0",
+    "escape-html": "^1.0.3",
     "is-hotkey": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "slate": "^0.82.1",
     "slate-history": "^0.66.0",
+    "slate-hyperscript": "^0.77.0",
     "slate-react": "^0.82.2"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@types/escape-html": "^1.0.2",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",

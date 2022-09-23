@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import RichTextExample from "./components/Editor";
 import { css } from "@emotion/css";
 const App = () => {

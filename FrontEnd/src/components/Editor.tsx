@@ -1,22 +1,31 @@
-import React, { useCallback, useMemo } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
   createEditor,
+  Editor,
   Element as SlateElement,
   Text as SlateText,
+  Descendant,
 } from "slate";
 import { isHotkey } from "is-hotkey";
 import { withHistory } from "slate-history";
 
 import { Toolbar } from "./BaseComponents";
 import { defaultValue } from "../data/defaultValue";
-import { plainTextHelper } from "../plugins/helpers/plainTextHelper";
 import { toggleMark } from "../plugins/helpers/toggleMark";
 import CustomElement from "./Custom/CustomElement";
 import CustomLeaf from "./Custom/CustomLeaf";
 
 import BlockButton from "./Button/BlockButton";
 import MarkButton from "./Button/MarkButton";
+
+import { serialize, deserialize } from "../util/serializeHelper";
 interface HotKeyType {
   [key: string]: string;
 }
@@ -57,6 +66,10 @@ const RichTextExample = () => {
       : defaultValue;
     return data;
   }, []);
+  const [slateValue, setSlateValue] = useState<Descendant[]>([]);
+  useEffect(() => {
+    setSlateValue(initialValue);
+  }, [initialValue]);
   return (
     <Slate
       editor={editor}
@@ -68,6 +81,7 @@ const RichTextExample = () => {
         if (isAstChange) {
           const content = JSON.stringify(value);
           localStorage.setItem("content", content);
+          setSlateValue(value);
         }
       }}
     >
@@ -102,6 +116,27 @@ const RichTextExample = () => {
           }
         }}
       />
+      <button
+        onClick={() => {
+          console.log(slateValue);
+          const htmlString = slateValue
+            .map((node) => {
+              const serializedNodeString = serialize(node);
+              return serializedNodeString;
+            })
+            .join("");
+          console.log(htmlString);
+          // parse back to json
+          const document = new DOMParser().parseFromString(
+            htmlString,
+            "text/html"
+          );
+          const jsonData = deserialize(document.body);
+          console.log(jsonData);
+        }}
+      >
+        serialize content
+      </button>
     </Slate>
   );
 };

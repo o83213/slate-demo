@@ -23,7 +23,7 @@ export type BulletedListElement = {
 };
 
 export type HeadingElement = {
-  type: "heading";
+  type: "heading-one";
   align?: string;
   children: Descendant[];
 };
