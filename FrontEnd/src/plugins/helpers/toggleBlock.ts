@@ -1,30 +1,50 @@
-import { Editor, Element, Transforms } from "slate";
+import { Editor, Element, Transforms, Range } from "slate";
 import { isBlockActive } from "./isBlockActive";
-
+import { isLinkActive } from "./isLinkActive";
+import { wrapLink } from "./wrapLink";
+import { unwrapLink } from "./unwrapLink";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
-export const toggleBlock = (editor: Editor, format: string) => {
+export const toggleBlock = (
+  editor: Editor,
+  format: string,
+  url: string = "https://www.google.com.tw/"
+) => {
+  console.log(format);
   const isActive = isBlockActive(
     editor,
     format,
     TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
   );
+  console.log(isActive);
   const isList = LIST_TYPES.includes(format);
-
+  console.log(isList);
+  const isLink = format === "link";
+  console.log(isLink);
   Transforms.unwrapNodes(editor, {
     match: (n) =>
       !Editor.isEditor(n) &&
       Element.isElement(n) &&
+      n.type === "link" &&
       LIST_TYPES.includes(n.type) &&
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
   });
-  let newProperties: Partial<Element>;
+  // let newProperties: Partial<Element>;
+  let newProperties: any;
 
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
     };
+  } else if (format === "link") {
+    if (editor.selection) {
+      wrapLink(editor, url);
+    }
+  } else if (format === "link_off") {
+    if (isLinkActive(editor)) {
+      unwrapLink(editor);
+    }
   } else {
     let format_type = format as Element["type"];
     newProperties = {

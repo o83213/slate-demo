@@ -9,6 +9,7 @@ const MarkButton = ({ format, icon }: any) => {
       active={isMarkActive(editor, format)}
       onMouseDown={(event: React.MouseEvent) => {
         event.preventDefault();
+        console.log(format);
         toggleMark(editor, format);
       }}
     >

@@ -106,6 +106,7 @@ export interface CustomText {
   italic?: boolean;
   code?: boolean;
   underline?: boolean;
+  delete?: boolean;
   text: string;
 }
 

@@ -1,7 +1,6 @@
 import { css } from "@emotion/css";
 const CustomElement = ({ attributes, children, element }: any) => {
   const style = { textAlign: element.align };
-  console.log(element.type);
   switch (element.type) {
     case "block-quote":
       return (
@@ -19,6 +18,14 @@ const CustomElement = ({ attributes, children, element }: any) => {
         >
           {children}
         </blockquote>
+      );
+    case "link":
+      console.log("link: ", attributes);
+      console.log("element: ", element);
+      return (
+        <a style={style} {...attributes} href={element.url}>
+          {children}
+        </a>
       );
     case "bulleted-list":
       return (

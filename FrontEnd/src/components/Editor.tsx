@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useRef,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
   createEditor,
@@ -19,6 +13,7 @@ import { withHistory } from "slate-history";
 import { Toolbar } from "./BaseComponents";
 import { defaultValue } from "../data/defaultValue";
 import { toggleMark } from "../plugins/helpers/toggleMark";
+import { withInlines } from "../plugins/helpers/withInline";
 import CustomElement from "./Custom/CustomElement";
 import CustomLeaf from "./Custom/CustomLeaf";
 
@@ -57,7 +52,7 @@ const RichTextExample = () => {
     []
   );
   const editor = useMemo(() => {
-    return withHistory(withReact(createEditor()));
+    return withInlines(withHistory(withReact(createEditor())));
   }, []);
   const initialValue = useMemo(() => {
     const localStorageContent = localStorage.getItem("content");
@@ -88,8 +83,11 @@ const RichTextExample = () => {
       <Toolbar>
         <MarkButton format="bold" icon="format_bold" />
         <MarkButton format="italic" icon="format_italic" />
+        <MarkButton format="delete" icon="format_strikethrough" />
         <MarkButton format="underline" icon="format_underlined" />
         <MarkButton format="code" icon="code" />
+        <BlockButton format="link" icon="link" />
+        <BlockButton format="link" icon="link_off" />
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />
         <BlockButton format="block-quote" icon="format_quote" />

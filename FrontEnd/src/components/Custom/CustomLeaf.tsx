@@ -9,7 +9,6 @@ const CustomLeaf = ({ attributes, children, leaf }: LeafProps) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
-
   if (leaf.code) {
     children = (
       <code
@@ -26,7 +25,9 @@ const CustomLeaf = ({ attributes, children, leaf }: LeafProps) => {
   if (leaf.italic) {
     children = <em>{children}</em>;
   }
-
+  if (leaf.delete) {
+    children = <del>{children}</del>;
+  }
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
