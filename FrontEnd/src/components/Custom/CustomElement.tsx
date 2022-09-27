@@ -1,5 +1,7 @@
 import { css } from "@emotion/css";
-const CustomElement = ({ attributes, children, element }: any) => {
+import CustomImageElement from "./CustomImageElement";
+const CustomElement = (props: any) => {
+  const { attributes, children, element } = props;
   const style = { textAlign: element.align };
   switch (element.type) {
     case "block-quote":
@@ -27,12 +29,9 @@ const CustomElement = ({ attributes, children, element }: any) => {
           {children}
         </a>
       );
-    case "bulleted-list":
-      return (
-        <ul style={style} {...attributes}>
-          {children}
-        </ul>
-      );
+    case "image":
+      console.log(props);
+      return <CustomImageElement {...props} />;
     case "heading-one":
       return (
         <h1 style={style} {...attributes}>
@@ -50,6 +49,12 @@ const CustomElement = ({ attributes, children, element }: any) => {
         <li style={style} {...attributes}>
           {children}
         </li>
+      );
+    case "bulleted-list":
+      return (
+        <ul style={style} {...attributes}>
+          {children}
+        </ul>
       );
     case "numbered-list":
       return (

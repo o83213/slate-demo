@@ -16,6 +16,11 @@ export type BlockQuoteElement = {
   children: Descendant[];
 };
 
+export type NumberedListElement = {
+  type: "numbered-list";
+  align?: string;
+  children: Descendant[];
+};
 export type BulletedListElement = {
   type: "bulleted-list";
   align?: string;
@@ -85,6 +90,8 @@ export type VideoElement = {
 type CustomElement =
   | BlockQuoteElement
   | BulletedListElement
+  | NumberedListElement
+  | ListItemElement
   | HeadingElement
   | HeadingTwoElement
   | CheckListItemElement
@@ -92,7 +99,6 @@ type CustomElement =
   | ImageElement
   | LinkElement
   | ButtonElement
-  | ListItemElement
   | MentionElement
   | ParagraphElement
   | TableElement

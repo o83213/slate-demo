@@ -4,8 +4,14 @@ import { isBlockActive } from "../../plugins/helpers/isBlockActive";
 import { isLinkActive } from "../../plugins/helpers/isLinkActive";
 import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
+import { isUrl } from "../../util/isUrl";
+import { isImageUrl } from "../../util/isImageUrl";
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
-const BlockButton = ({ format, icon }: any) => {
+interface ButtonProps {
+  format: string;
+  icon: string;
+}
+const BlockButton = ({ format, icon }: ButtonProps) => {
   const editor = useSlate();
   return (
     <Button
@@ -23,7 +29,15 @@ const BlockButton = ({ format, icon }: any) => {
         }
         if (format === "link") {
           const url = window.prompt("Enter the URL of the link:");
-          if (!url) {
+          if (!url || !isUrl(url)) {
+            alert("Not a valid input!");
+            return;
+          }
+          return toggleBlock(editor, format, url);
+        }
+        if (format === "image") {
+          const url = window.prompt("Enter the URL of the image:");
+          if (!url || !isImageUrl(url)) {
             alert("Not a valid input!");
             return;
           }

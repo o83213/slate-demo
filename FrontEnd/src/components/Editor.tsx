@@ -19,7 +19,6 @@ import CustomLeaf from "./Custom/CustomLeaf";
 
 import BlockButton from "./Button/BlockButton";
 import MarkButton from "./Button/MarkButton";
-
 import { serialize, deserialize } from "../util/serializeHelper";
 interface HotKeyType {
   [key: string]: string;
@@ -52,6 +51,7 @@ const RichTextExample = () => {
     []
   );
   const editor = useMemo(() => {
+    // return withImages(withInlines(withHistory(withReact(createEditor()))));
     return withInlines(withHistory(withReact(createEditor())));
   }, []);
   const initialValue = useMemo(() => {
@@ -88,6 +88,8 @@ const RichTextExample = () => {
         <MarkButton format="code" icon="code" />
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
+        <BlockButton format="image" icon="image" />
+        {/* <InsertImageButton /> */}
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />
         <BlockButton format="block-quote" icon="format_quote" />
