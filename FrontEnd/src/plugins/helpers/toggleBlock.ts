@@ -4,6 +4,7 @@ import { isBlockActive } from "./isBlockActive";
 import { wrapLink } from "./wrapLink";
 import { unwrapLink } from "./unwrapLink";
 import { insertImage } from "../helpers/insertImage";
+import { insertIframe } from "./insertIframe";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 export const toggleBlock = (
@@ -11,7 +12,7 @@ export const toggleBlock = (
   format: string,
   url: string = "https://www.google.com.tw/"
 ) => {
-  // console.log("format:", format);
+  console.log("format:", format);
   const isActive = isBlockActive(
     editor,
     format,
@@ -45,6 +46,9 @@ export const toggleBlock = (
     }
   } else if (format === "image") {
     insertImage(editor, url);
+  } else if (format === "embed") {
+    console.log("insert Embed code");
+    insertIframe(editor, url);
   } else {
     let format_type = format as Element["type"];
     newProperties = {

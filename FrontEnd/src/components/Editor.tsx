@@ -96,6 +96,7 @@ const RichTextExample = () => {
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
         <BlockButton format="image" icon="image" />
+        <BlockButton format="embed" icon="html" />
         <BlockButton format="table" icon="table_chart" />
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />

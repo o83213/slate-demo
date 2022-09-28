@@ -7,7 +7,7 @@ export const withPlugins = (editor: Editor) => {
   editor.isInline = (element) =>
     ["link", "button"].includes(element.type) || isInline(element);
   editor.isVoid = (element) => {
-    return element.type === "image" ? true : isVoid(element);
+    return ["image", "embed"].includes(element.type) ? true : isVoid(element);
   };
   // editor.insertText = (text) => {
   //   if (text && isUrl(text)) {
