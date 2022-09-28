@@ -6,6 +6,10 @@ interface LeafProps {
   leaf: SlateText;
 }
 const CustomLeaf = ({ attributes, children, leaf }: LeafProps) => {
+  console.log(leaf);
+  if (leaf.color) {
+    children = <span style={{ color: leaf.color }}>{children}</span>;
+  }
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -31,7 +35,6 @@ const CustomLeaf = ({ attributes, children, leaf }: LeafProps) => {
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
-
   return <span {...attributes}>{children}</span>;
 };
 export default CustomLeaf;

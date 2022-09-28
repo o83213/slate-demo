@@ -1,8 +1,8 @@
 import { Editor, Range, Element, Transforms } from "slate";
-import { isLinkActive } from "./isLinkActive";
+import { isBlockActive } from "./isBlockActive";
 import { unwrapLink } from "./unwrapLink";
 export const wrapLink = (editor: Editor, url: string) => {
-  if (isLinkActive(editor)) {
+  if (isBlockActive(editor, "link")) {
     unwrapLink(editor);
   }
 

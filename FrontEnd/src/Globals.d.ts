@@ -59,7 +59,11 @@ export type CheckListItemElement = {
   children: Descendant[];
 };
 export type LinkElement = { type: "link"; url: string; children: Descendant[] };
-
+export type EmbedElement = {
+  type: "embed";
+  url: string;
+  children: Descendant[];
+};
 export type ButtonElement = { type: "button"; children: Descendant[] };
 
 export type MentionElement = {
@@ -105,7 +109,8 @@ type CustomElement =
   | TableRowElement
   | TableCellElement
   | TitleElement
-  | VideoElement;
+  | VideoElement
+  | EmbedElement;
 
 export interface CustomText {
   bold?: boolean;
@@ -113,6 +118,7 @@ export interface CustomText {
   code?: boolean;
   underline?: boolean;
   delete?: boolean;
+  color?: string;
   text: string;
 }
 

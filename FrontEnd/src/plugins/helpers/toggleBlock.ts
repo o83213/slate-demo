@@ -1,6 +1,6 @@
 import { Editor, Element, Transforms, Range } from "slate";
 import { isBlockActive } from "./isBlockActive";
-import { isLinkActive } from "./isLinkActive";
+// import { isLinkActive } from "./isLinkActive";
 import { wrapLink } from "./wrapLink";
 import { unwrapLink } from "./unwrapLink";
 import { insertImage } from "../helpers/insertImage";
@@ -11,15 +11,15 @@ export const toggleBlock = (
   format: string,
   url: string = "https://www.google.com.tw/"
 ) => {
-  console.log("format:", format);
+  // console.log("format:", format);
   const isActive = isBlockActive(
     editor,
     format,
     TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
   );
-  console.log("isActive: ", isActive);
+  // console.log("isActive: ", isActive);
   const isList = LIST_TYPES.includes(format);
-  console.log("isList: ", isList);
+  // console.log("isList: ", isList);
   Transforms.unwrapNodes(editor, {
     match: (n) =>
       !Editor.isEditor(n) &&
@@ -40,20 +40,19 @@ export const toggleBlock = (
       wrapLink(editor, url);
     }
   } else if (format === "link_off") {
-    if (isLinkActive(editor)) {
+    if (isBlockActive(editor, "link")) {
       unwrapLink(editor);
     }
   } else if (format === "image") {
     insertImage(editor, url);
   } else {
     let format_type = format as Element["type"];
-    console.log(format_type);
     newProperties = {
       type: isActive ? "paragraph" : isList ? "list-item" : format_type,
       // type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  console.log("newProperties", newProperties);
+  // console.log("newProperties", newProperties);
   Transforms.setNodes<Element>(editor, newProperties);
 
   if (!isActive && isList) {

@@ -1,7 +1,6 @@
 import { useSlate } from "slate-react";
 import { Button, Icon } from "../BaseComponents";
 import { isBlockActive } from "../../plugins/helpers/isBlockActive";
-import { isLinkActive } from "../../plugins/helpers/isLinkActive";
 import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
 import { isUrl } from "../../util/isUrl";
@@ -23,7 +22,7 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
       onMouseDown={(event: React.MouseEvent) => {
         event.preventDefault();
         if (icon === "link_off") {
-          if (isLinkActive(editor)) {
+          if (isBlockActive(editor, "link")) {
             return unwrapLink(editor);
           }
         }
@@ -50,4 +49,19 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
     </Button>
   );
 };
+// 插入嵌入網站標籤
+// export const EmbedButton = () => {
+//   const editor = useSlateStatic();
+//   return (
+//     <Button
+//       data-title={"嵌入連結"}
+//       onMouseDown={(event) => {
+//         event.preventDefault();
+//         CustomEditor.embed(editor);
+//       }}
+//     >
+//       <BlockIcon>label_important_outline</BlockIcon>
+//     </Button>
+//   );
+// };
 export default BlockButton;

@@ -8,11 +8,14 @@ interface BaseProps {
 interface ButtonProps extends BaseProps {
   active?: boolean;
   reversed?: boolean;
+  buttonColor?: string;
+  onMouseDown?: (event: React.MouseEvent) => void;
 }
 export const Button = ({
   className,
   active,
   reversed,
+  buttonColor,
   ...props
 }: ButtonProps) => {
   return (
@@ -22,7 +25,9 @@ export const Button = ({
         className,
         css`
           cursor: pointer;
-          color: ${reversed
+          color: ${buttonColor
+            ? buttonColor
+            : reversed
             ? active
               ? "white"
               : "#aaa"

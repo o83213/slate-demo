@@ -13,12 +13,13 @@ import { withHistory } from "slate-history";
 import { Toolbar } from "./BaseComponents";
 import { defaultValue } from "../data/defaultValue";
 import { toggleMark } from "../plugins/helpers/toggleMark";
-import { withInlines } from "../plugins/helpers/withInline";
+import { withPlugins } from "../plugins/withPlugins";
 import CustomElement from "./Custom/CustomElement";
 import CustomLeaf from "./Custom/CustomLeaf";
 
 import BlockButton from "./Button/BlockButton";
 import MarkButton from "./Button/MarkButton";
+import StateButton from "./Button/StateButton";
 import { serialize, deserialize } from "../util/serializeHelper";
 interface HotKeyType {
   [key: string]: string;
@@ -51,8 +52,8 @@ const RichTextExample = () => {
     []
   );
   const editor = useMemo(() => {
-    // return withImages(withInlines(withHistory(withReact(createEditor()))));
-    return withInlines(withHistory(withReact(createEditor())));
+    // return withHistory(withReact(createEditor()));
+    return withPlugins(withHistory(withReact(createEditor())));
   }, []);
   const initialValue = useMemo(() => {
     const localStorageContent = localStorage.getItem("content");
@@ -63,6 +64,7 @@ const RichTextExample = () => {
   }, []);
   const [slateValue, setSlateValue] = useState<Descendant[]>([]);
   useEffect(() => {
+    console.log(initialValue);
     setSlateValue(initialValue);
   }, [initialValue]);
   return (
@@ -86,10 +88,15 @@ const RichTextExample = () => {
         <MarkButton format="delete" icon="format_strikethrough" />
         <MarkButton format="underline" icon="format_underlined" />
         <MarkButton format="code" icon="code" />
+        <StateButton
+          format="color"
+          icon="format_color_text"
+          defaultState="black"
+        />
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
         <BlockButton format="image" icon="image" />
-        {/* <InsertImageButton /> */}
+        <BlockButton format="table" icon="table_chart" />
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />
         <BlockButton format="block-quote" icon="format_quote" />

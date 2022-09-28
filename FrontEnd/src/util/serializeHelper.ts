@@ -1,12 +1,16 @@
 import { Descendant, Text, Element } from "slate";
 import escapeHtml from "escape-html";
 import { jsx } from "slate-hyperscript";
+import { convertRgb2Hex } from "./convertRgb2Hex";
 // serialize function
 // TODO: add bold, italic and bold
 export const serialize = (node: Descendant) => {
   if (Text.isText(node)) {
     let string = escapeHtml(node.text);
     let htmlString = `<span>${string}</span>`;
+    if (node.color) {
+      htmlString = `<span style="color: ${node.color}">${htmlString}</span>`;
+    }
     if (node.bold) {
       htmlString = `<strong>${htmlString}</strong>`;
     }
@@ -86,6 +90,10 @@ export const deserialize: any = (
     case "U":
       nodeAttributes.underline = true;
       break;
+    case "SPAN":
+      if (el.style.color !== "") {
+        nodeAttributes.color = convertRgb2Hex(el.style.color);
+      }
   }
   const children: Descendant[] | null = Array.from(el.childNodes)
     .map((node) => deserialize(node, nodeAttributes))
@@ -112,7 +120,7 @@ export const deserialize: any = (
     }
   }
   //
-  console.log(el.nodeName);
+  // console.log(el.nodeName);
   switch (el.nodeName) {
     case "BODY":
       return jsx("fragment", {}, children);
