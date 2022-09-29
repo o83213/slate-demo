@@ -7,6 +7,7 @@ import {
   useFocused,
 } from "slate-react";
 import { css } from "@emotion/css";
+import "./instagram.css";
 const CustomEmbedElement = (props: any) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
@@ -16,11 +17,6 @@ const CustomEmbedElement = (props: any) => {
   const { url } = element;
   console.log(element);
   console.log(element.url);
-  console.log(
-    "刪除後面字串改成embed",
-    url.replace("?utm_source=ig_web_copy_link", "embed")
-  );
-  const instagram_URL = url.replace("?utm_source=ig_web_copy_link", "embed");
   return (
     <div {...attributes}>
       {children}
@@ -30,7 +26,26 @@ const CustomEmbedElement = (props: any) => {
           position: relative;
         `}
       >
-        <iframe src={instagram_URL}></iframe>
+        <Button
+          active
+          onClick={() => Transforms.removeNodes(editor, { at: path })}
+          className={css`
+            display: "inline";
+            position: absolute;
+            top: 0.5em;
+            left: 0.5em;
+            background-color: white;
+          `}
+        >
+          <Icon>delete</Icon>
+        </Button>
+        <blockquote
+          // className="instagram-media"
+          className="instagram-media ig"
+          data-instgrm-captioned
+          data-instgrm-permalink={`https://www.instagram.com/${url}/?utm_source=ig_embed&amp;utm_campaign=loading`}
+          data-instgrm-version="14"
+        ></blockquote>
       </div>
     </div>
   );

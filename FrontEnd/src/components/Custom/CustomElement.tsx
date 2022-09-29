@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import CustomImageElement from "./CustomImageElement";
 import CustomEmbedElement from "./CustomEmbedElement";
+declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
   console.log("element", element);
@@ -37,6 +38,9 @@ const CustomElement = (props: any) => {
       return <CustomImageElement {...props} />;
     case "embed":
       console.log("embed");
+      setTimeout(() => {
+        instgrm.Embeds.process();
+      }, 500);
       return <CustomEmbedElement {...props} />;
     case "heading-one":
       return (
