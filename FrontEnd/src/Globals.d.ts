@@ -38,10 +38,6 @@ export type HeadingTwoElement = {
   align?: string;
   children: Descendant[];
 };
-export type EditableVoidElement = {
-  type: "editable-void";
-  children: EmptyText[];
-};
 export type ListItemElement = {
   type: "list-item";
   children: Descendant[];
@@ -52,24 +48,11 @@ export type ImageElement = {
   url: string;
   children: EmptyText[];
 };
-
-export type CheckListItemElement = {
-  type: "check-list-item";
-  checked: boolean;
-  children: Descendant[];
-};
 export type LinkElement = { type: "link"; url: string; children: Descendant[] };
 export type EmbedElement = {
   type: "embed";
   url: string;
   children: Descendant[];
-};
-export type ButtonElement = { type: "button"; children: Descendant[] };
-
-export type MentionElement = {
-  type: "mention";
-  character: string;
-  children: CustomText[];
 };
 
 export type ParagraphElement = {
@@ -98,12 +81,8 @@ type CustomElement =
   | ListItemElement
   | HeadingElement
   | HeadingTwoElement
-  | CheckListItemElement
-  | EditableVoidElement
   | ImageElement
   | LinkElement
-  | ButtonElement
-  | MentionElement
   | ParagraphElement
   | TableElement
   | TableRowElement

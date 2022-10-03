@@ -1,7 +1,7 @@
 import { Button, Icon } from "../BaseComponents";
 import { Transforms } from "slate";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { css } from "@emotion/css";
+import { css, cx } from "@emotion/css";
 import "./instagram.css";
 const EmbedElement = (props: any) => {
   const { attributes, children, element } = props;
@@ -31,8 +31,7 @@ const EmbedElement = (props: any) => {
           <Icon>delete</Icon>
         </Button>
         <blockquote
-          // className="instagram-media"
-          className="instagram-media ig"
+          className={cx("instagram-media", "ig")}
           data-instgrm-captioned
           data-instgrm-permalink={`https://www.instagram.com/${url}/?utm_source=ig_embed&amp;utm_campaign=loading`}
           data-instgrm-version="14"
