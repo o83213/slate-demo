@@ -48,6 +48,11 @@ export type ImageElement = {
   url: string;
   children: EmptyText[];
 };
+export type VideoElement = {
+  type: "video";
+  url: string;
+  children: EmptyText[];
+};
 export type LinkElement = { type: "link"; url: string; children: Descendant[] };
 export type EmbedElement = {
   type: "embed";
@@ -69,11 +74,6 @@ export type TableRowElement = { type: "table-row"; children: TableCell[] };
 
 export type TitleElement = { type: "title"; children: Descendant[] };
 
-export type VideoElement = {
-  type: "video";
-  url: string;
-  children: EmptyText[];
-};
 type CustomElement =
   | QuoteElement
   | BulletedListElement
@@ -83,12 +83,12 @@ type CustomElement =
   | HeadingTwoElement
   | ImageElement
   | LinkElement
+  | VideoElement
   | ParagraphElement
   | TableElement
   | TableRowElement
   | TableCellElement
   | TitleElement
-  | VideoElement
   | EmbedElement;
 
 export interface CustomText {

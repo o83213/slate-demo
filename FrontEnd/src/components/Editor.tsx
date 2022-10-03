@@ -94,6 +94,7 @@ const RichTextExample = () => {
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
         <BlockButton format="image" icon="image" />
+        <BlockButton format="video" icon="video_library" />
         <BlockButton format="embed" icon="html" />
         <BlockButton format="table" icon="table_chart" />
         <BlockButton format="heading-one" icon="looks_one" />
@@ -124,6 +125,7 @@ const RichTextExample = () => {
       />
       <button
         onClick={() => {
+          console.log(slateValue);
           const htmlString = slateValue
             .map((node) => {
               const serializedNodeString = serialize(node);

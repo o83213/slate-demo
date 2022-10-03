@@ -42,6 +42,14 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
           }
           return toggleBlock(editor, format, url);
         }
+        if (format === "video") {
+          const url = window.prompt("Enter the URL of the image:");
+          if (!url) {
+            alert("Not a valid input!");
+            return;
+          }
+          return toggleBlock(editor, format, url);
+        }
         if (format === "embed") {
           const url = window.prompt("Enter the URL of the Instagram post:");
           // if (!url || !isImageUrl(url)) {

@@ -2,8 +2,9 @@ import { Editor, Element, Transforms } from "slate";
 import { isBlockActive } from "./isBlockActive";
 import { wrapLink } from "./wrapLink";
 import { unwrapLink } from "./unwrapLink";
-import { insertImage } from "../helpers/insertImage";
+import { insertImage } from "./insertImage";
 import { insertIframe } from "./insertIframe";
+import { insertVideo } from "./insertVideo";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 export const toggleBlock = (
@@ -42,6 +43,8 @@ export const toggleBlock = (
     }
   } else if (format === "image") {
     insertImage(editor, url);
+  } else if (format === "video") {
+    insertVideo(editor, url);
   } else if (format === "embed") {
     insertIframe(editor, url);
   } else {

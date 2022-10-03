@@ -5,7 +5,9 @@ export const withPlugins = (editor: Editor) => {
   editor.isInline = (element) =>
     ["link", "button"].includes(element.type) || isInline(element);
   editor.isVoid = (element) => {
-    return ["image", "embed"].includes(element.type) ? true : isVoid(element);
+    return ["image", "embed", "video"].includes(element.type)
+      ? true
+      : isVoid(element);
   };
   return editor;
 };

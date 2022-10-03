@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import ImageElement from "./ImageElement";
 import EmbedElement from "./EmbedElement";
+import VideoElement from "./VideoElement";
 declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
@@ -31,6 +32,8 @@ const CustomElement = (props: any) => {
       );
     case "image":
       return <ImageElement {...props} />;
+    case "video":
+      return <VideoElement {...props} />;
     case "embed":
       setTimeout(() => {
         instgrm.Embeds.process();
