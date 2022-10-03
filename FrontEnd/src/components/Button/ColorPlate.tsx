@@ -25,14 +25,12 @@ const ColorPalte = (props: any) => {
     <div
       className={css`
         position: absolute;
-        /* border-radius: 9px; */
         box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
         top: 0;
         left: 0;
         display: grid;
         z-index: 10;
         grid-template-columns: repeat(3, 1fr);
-        /* grid-template-rows: repeat(3, 1fr); */
         overflow: hidden;
         transform: translate(10%, 30%);
       `}

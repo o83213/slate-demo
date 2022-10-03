@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Editable, withReact, useSlate, Slate } from "slate-react";
+import { Editable, withReact, Slate } from "slate-react";
 import {
   createEditor,
-  Editor,
   Element as SlateElement,
   Text as SlateText,
   Descendant,
@@ -19,8 +18,8 @@ import CustomLeaf from "./Custom/CustomLeaf";
 
 import BlockButton from "./Button/BlockButton";
 import MarkButton from "./Button/MarkButton";
-import StateButton from "./Button/StateButton";
-import { serialize, deserialize } from "../util/serializeHelper";
+import StateButton from "./Button/ColorButton";
+import { serialize, deserialize } from "../plugins/helpers/serializeHelper";
 interface HotKeyType {
   [key: string]: string;
 }
@@ -64,7 +63,6 @@ const RichTextExample = () => {
   }, []);
   const [slateValue, setSlateValue] = useState<Descendant[]>([]);
   useEffect(() => {
-    console.log(initialValue);
     setSlateValue(initialValue);
   }, [initialValue]);
   return (
@@ -100,7 +98,7 @@ const RichTextExample = () => {
         <BlockButton format="table" icon="table_chart" />
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="block-quote" icon="format_quote" />
+        <BlockButton format="quote" icon="format_quote" />
         <BlockButton format="numbered-list" icon="format_list_numbered" />
         <BlockButton format="bulleted-list" icon="format_list_bulleted" />
         <BlockButton format="left" icon="format_align_left" />
@@ -126,21 +124,18 @@ const RichTextExample = () => {
       />
       <button
         onClick={() => {
-          console.log(slateValue);
           const htmlString = slateValue
             .map((node) => {
               const serializedNodeString = serialize(node);
               return serializedNodeString;
             })
             .join("");
-          console.log(htmlString);
           // parse back to json
           const document = new DOMParser().parseFromString(
             htmlString,
             "text/html"
           );
           const jsonData = deserialize(document.body);
-          console.log(jsonData);
         }}
       >
         serialize content

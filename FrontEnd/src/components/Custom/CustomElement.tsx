@@ -1,17 +1,14 @@
 import { css } from "@emotion/css";
-import CustomImageElement from "./CustomImageElement";
-import CustomEmbedElement from "./CustomEmbedElement";
+import ImageElement from "./ImageElement";
+import EmbedElement from "./EmbedElement";
 declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
-  console.log("element", element);
   const style = { textAlign: element.align };
-  console.log("type", element.type);
   switch (element.type) {
-    case "block-quote":
-      console.log(element.type);
+    case "quote":
       return (
-        <blockquote
+        <q
           className={css`
             border-left: 2px solid #ddd;
             margin-left: 0;
@@ -24,24 +21,21 @@ const CustomElement = (props: any) => {
           {...attributes}
         >
           {children}
-        </blockquote>
+        </q>
       );
     case "link":
-      console.log("link: ", attributes);
-      console.log("element: ", element);
       return (
         <a style={style} {...attributes} href={element.url}>
           {children}
         </a>
       );
     case "image":
-      return <CustomImageElement {...props} />;
+      return <ImageElement {...props} />;
     case "embed":
-      console.log("embed");
       setTimeout(() => {
         instgrm.Embeds.process();
-      }, 500);
-      return <CustomEmbedElement {...props} />;
+      }, 100);
+      return <EmbedElement {...props} />;
     case "heading-one":
       return (
         <h1 style={style} {...attributes}>

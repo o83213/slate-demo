@@ -13,7 +13,6 @@ const StateButton = (props: any) => {
   }, [defaultState]);
   const editor = useSlate();
   const changeColorHandler = (newColor: string) => {
-    console.log("newColor", newColor);
     setColor(newColor);
   };
   return (
@@ -22,8 +21,6 @@ const StateButton = (props: any) => {
         buttonColor={color}
         onMouseDown={(event) => {
           event.preventDefault();
-          console.log(format);
-          console.log(color);
           toggleMark(editor, format, color);
         }}
       >

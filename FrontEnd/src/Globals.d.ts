@@ -10,8 +10,8 @@ import {
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 
-export type BlockQuoteElement = {
-  type: "block-quote";
+export type QuoteElement = {
+  type: "quote";
   align?: string;
   children: Descendant[];
 };
@@ -92,7 +92,7 @@ export type VideoElement = {
   children: EmptyText[];
 };
 type CustomElement =
-  | BlockQuoteElement
+  | QuoteElement
   | BulletedListElement
   | NumberedListElement
   | ListItemElement

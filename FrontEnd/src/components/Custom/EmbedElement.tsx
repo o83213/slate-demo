@@ -1,22 +1,13 @@
 import { Button, Icon } from "../BaseComponents";
 import { Transforms } from "slate";
-import {
-  useSlateStatic,
-  ReactEditor,
-  useSelected,
-  useFocused,
-} from "slate-react";
+import { useSlateStatic, ReactEditor } from "slate-react";
 import { css } from "@emotion/css";
 import "./instagram.css";
-const CustomEmbedElement = (props: any) => {
+const EmbedElement = (props: any) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const selected = useSelected();
-  const focused = useFocused();
   const { url } = element;
-  console.log(element);
-  console.log(element.url);
   return (
     <div {...attributes}>
       {children}
@@ -51,4 +42,4 @@ const CustomEmbedElement = (props: any) => {
   );
 };
 
-export default CustomEmbedElement;
+export default EmbedElement;

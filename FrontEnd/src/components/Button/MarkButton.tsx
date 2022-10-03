@@ -12,7 +12,6 @@ const MarkButton = ({ format, icon }: ButtonProps) => {
     <Button
       active={isMarkActive(editor, format)}
       onMouseDown={() => {
-        console.log(format);
         toggleMark(editor, format);
       }}
     >

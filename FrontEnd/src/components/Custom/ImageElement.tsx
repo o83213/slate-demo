@@ -7,7 +7,7 @@ import {
   useFocused,
 } from "slate-react";
 import { css } from "@emotion/css";
-const CustomImageElement = (props: any) => {
+const ImageElement = (props: any) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
@@ -49,4 +49,4 @@ const CustomImageElement = (props: any) => {
   );
 };
 
-export default CustomImageElement;
+export default ImageElement;

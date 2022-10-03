@@ -6,7 +6,6 @@ interface LeafProps {
   leaf: SlateText;
 }
 const CustomLeaf = ({ attributes, children, leaf }: LeafProps) => {
-  console.log(leaf);
   if (leaf.color) {
     children = <span style={{ color: leaf.color }}>{children}</span>;
   }

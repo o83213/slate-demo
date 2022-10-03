@@ -43,7 +43,7 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
           return toggleBlock(editor, format, url);
         }
         if (format === "embed") {
-          const url = window.prompt("Enter the URL of the image:");
+          const url = window.prompt("Enter the URL of the Instagram post:");
           // if (!url || !isImageUrl(url)) {
           if (!url) {
             alert("Not a valid input!");
@@ -58,19 +58,4 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
     </Button>
   );
 };
-// 插入嵌入網站標籤
-// export const EmbedButton = () => {
-//   const editor = useSlateStatic();
-//   return (
-//     <Button
-//       data-title={"嵌入連結"}
-//       onMouseDown={(event) => {
-//         event.preventDefault();
-//         CustomEditor.embed(editor);
-//       }}
-//     >
-//       <BlockIcon>label_important_outline</BlockIcon>
-//     </Button>
-//   );
-// };
 export default BlockButton;

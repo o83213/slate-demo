@@ -1,9 +1,7 @@
 import { Descendant, Text, Element } from "slate";
 import escapeHtml from "escape-html";
 import { jsx } from "slate-hyperscript";
-import { convertRgb2Hex } from "./convertRgb2Hex";
-// serialize function
-// TODO: add bold, italic and bold
+import { convertRgb2Hex } from "../../util/convertRgb2Hex";
 export const serialize = (node: Descendant) => {
   if (Text.isText(node)) {
     let string = escapeHtml(node.text);
@@ -38,12 +36,32 @@ export const serialize = (node: Descendant) => {
       return `<h1${align}>${children}</h1$>`;
     case "heading-two":
       return `<h2${align}>${children}</h2$>`;
-    case "block-quote":
-      return `<blockquote ${align}>${children}</blockquote>`;
+    case "quote":
+      return `<q ${align}>${children}</q>`;
     case "link":
       return `<a href="${escapeHtml(
         node.url
       )}" target="_blank">${children}</a>`;
+    case "embed":
+      return `<blockquote
+      class="instagram-media"
+      data-instgrm-captioned
+      data-instgrm-permalink="https://www.instagram.com/${escapeHtml(
+        node.url
+      )}/?utm_source=ig_embed&amp;utm_campaign=loading"
+      data-instgrm-version="14"
+      style="
+        border: 0;
+        border-radius: 3px;
+        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5),
+          0 1px 10px 0 rgba(0, 0, 0, 0.15);
+        margin: 1px;
+        max-width: 540px;
+        min-width: 326px;
+        padding: 0;
+        width: 99.375%;
+      "
+    >${children}</blockquote>`;
     case "image":
       return `<image src="${escapeHtml(node.url)}" alt=""/>`;
     case "paragraph":
@@ -120,14 +138,13 @@ export const deserialize: any = (
     }
   }
   //
-  // console.log(el.nodeName);
   switch (el.nodeName) {
     case "BODY":
       return jsx("fragment", {}, children);
     case "BR":
       return "\n";
-    case "BLOCKQUOTE":
-      elementAttribute = { ...elementAttribute, type: "block-quote" };
+    case "Q":
+      elementAttribute = { ...elementAttribute, type: "quote" };
       return jsx("element", elementAttribute, children);
     case "P":
       elementAttribute = { ...elementAttribute, type: "paragraph" };
