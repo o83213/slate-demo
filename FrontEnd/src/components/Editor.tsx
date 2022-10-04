@@ -20,6 +20,7 @@ import BlockButton from "./Button/BlockButton";
 import MarkButton from "./Button/MarkButton";
 import StateButton from "./Button/ColorButton";
 import { serialize, deserialize } from "../plugins/helpers/serializeHelper";
+import AnchorList from "./Anchor/AnchorList";
 interface HotKeyType {
   [key: string]: string;
 }
@@ -64,6 +65,7 @@ const RichTextExample = () => {
   useEffect(() => {
     setSlateValue(initialValue);
   }, [initialValue]);
+  const [anchorList, setAnchorList] = useState<string[]>(["id1", "id2", "id3"]);
   return (
     <Slate
       editor={editor}
@@ -98,6 +100,7 @@ const RichTextExample = () => {
       <Toolbar>
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
+        <BlockButton format="anchor" icon="anchor" />
         <BlockButton format="image" icon="image" />
         <BlockButton format="video" icon="video_library" />
         <BlockButton format="embed" icon="html" />
@@ -144,6 +147,7 @@ const RichTextExample = () => {
       >
         serialize content
       </button>
+      <AnchorList listData={anchorList} />
     </Slate>
   );
 };
