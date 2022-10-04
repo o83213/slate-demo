@@ -51,7 +51,6 @@ const RichTextExample = () => {
     []
   );
   const editor = useMemo(() => {
-    // return withHistory(withReact(createEditor()));
     return withPlugins(withHistory(withReact(createEditor())));
   }, []);
   const initialValue = useMemo(() => {

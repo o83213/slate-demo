@@ -11,8 +11,6 @@ const VideoElement = (props: any) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const selected = useSelected();
-  const focused = useFocused();
   return (
     <div {...attributes}>
       {children}

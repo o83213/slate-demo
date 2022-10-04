@@ -68,9 +68,9 @@ export type ParagraphElement = {
 
 export type TableElement = { type: "table"; children: TableRow[] };
 
-export type TableCellElement = { type: "table-cell"; children: CustomText[] };
-
 export type TableRowElement = { type: "table-row"; children: TableCell[] };
+
+export type TableCellElement = { type: "table-cell"; children: CustomText[] };
 
 export type TitleElement = { type: "title"; children: Descendant[] };
 

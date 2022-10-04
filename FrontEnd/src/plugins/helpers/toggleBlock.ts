@@ -5,12 +5,15 @@ import { unwrapLink } from "./unwrapLink";
 import { insertImage } from "./insertImage";
 import { insertIframe } from "./insertIframe";
 import { insertVideo } from "./insertVideo";
+import { insertTable } from "./insertTable";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 export const toggleBlock = (
   editor: Editor,
   format: string,
-  url: string = "https://www.google.com.tw/"
+  url: string = "https://www.google.com.tw/",
+  row?: number,
+  column?: number
 ) => {
   const isActive = isBlockActive(
     editor,
@@ -47,6 +50,8 @@ export const toggleBlock = (
     insertVideo(editor, url);
   } else if (format === "embed") {
     insertIframe(editor, url);
+  } else if (format === "table") {
+    insertTable(editor, row, column);
   } else {
     let format_type = format as Element["type"];
     newProperties = {

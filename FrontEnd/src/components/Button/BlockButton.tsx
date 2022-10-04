@@ -59,6 +59,20 @@ const BlockButton = ({ format, icon }: ButtonProps) => {
           }
           return toggleBlock(editor, format, url);
         }
+        if (format === "table") {
+          const row = window.prompt("Enter the row of the Table:");
+          const column = window.prompt("Enter the column of the Table:");
+          // if (!url || !isImageUrl(url)) {
+          if (!row || !column) {
+            alert("Not a valid input!");
+            return;
+          }
+          if (+row <= 1 || +column <= 1) {
+            alert("Row and Column must greater than 1!");
+            return;
+          }
+          return toggleBlock(editor, format, "", +row, +column);
+        }
         toggleBlock(editor, format);
       }}
     >

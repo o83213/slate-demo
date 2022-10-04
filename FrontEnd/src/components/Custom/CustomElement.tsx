@@ -2,6 +2,7 @@ import { css } from "@emotion/css";
 import ImageElement from "./ImageElement";
 import EmbedElement from "./EmbedElement";
 import VideoElement from "./VideoElement";
+import TableElement from "./TableElement";
 declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
@@ -69,6 +70,12 @@ const CustomElement = (props: any) => {
           {children}
         </ol>
       );
+    case "table":
+      return <TableElement {...props} />;
+    case "table-row":
+      return <tr {...attributes}>{children}</tr>;
+    case "table-cell":
+      return <td {...attributes}>{children}</td>;
     default:
       return (
         <p style={style} {...attributes}>
