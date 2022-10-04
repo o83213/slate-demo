@@ -37,7 +37,15 @@ export const serialize = (node: Descendant) => {
     case "heading-two":
       return `<h2${align}>${children}</h2$>`;
     case "quote":
-      return `<q ${align}>${children}</q>`;
+      return `<q${align} style="
+        border-left: 2px solid #ddd;
+        display: block;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 10px;
+        color: #aaa;
+        font-style: italic;
+      ">${children}</q>`;
     case "link":
       return `<a href="${escapeHtml(
         node.url
@@ -64,6 +72,23 @@ export const serialize = (node: Descendant) => {
     >${children}</blockquote>`;
     case "image":
       return `<image src="${escapeHtml(node.url)}" alt=""/>`;
+    case "table":
+      return `<table style="border-collapse: collapse;">${children}</table>`;
+    case "table-row":
+      return `<tr>${children}</tr>`;
+    case "table-cell":
+      return `<td style="padding: 10px;
+            border: 2px solid #ddd;">${children}</td>`;
+    case "video":
+      return `<iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/${node.url}"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>`;
     case "paragraph":
       return `<p${align}>${children}</p>`;
     case "list-item":

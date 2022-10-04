@@ -10,6 +10,7 @@ const App = () => {
         max-width: 42em;
         margin: 20px auto;
         padding: 20px;
+        padding-top: 0px;
       `}
     >
       <RichTextExample />
