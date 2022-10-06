@@ -24,6 +24,7 @@ const ImageElement = (props: any) => {
       >
         <img
           src={element.url}
+          id={element.id}
           className={css`
             display: block;
             max-width: 100%;

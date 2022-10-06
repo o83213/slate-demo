@@ -65,7 +65,23 @@ const RichTextExample = () => {
   useEffect(() => {
     setSlateValue(initialValue);
   }, [initialValue]);
-  const [anchorList, setAnchorList] = useState<string[]>(["id1", "id2", "id3"]);
+  const [anchorList, setAnchorList] = useState<{ name: string; id: string }[]>(
+    () => {
+      const anchor = localStorage.getItem("anchor");
+      if (anchor) {
+        return JSON.parse(anchor);
+      }
+      return [];
+    }
+  );
+  const addAnchorHandler = (name: string, anchorId: string) => {
+    setAnchorList((prev) => [...prev, { name, id: anchorId }]);
+  };
+  const removeAnchorHandler = (anchorId: string) => {
+    setAnchorList((prev) =>
+      prev.filter((anchorData) => anchorData.id !== anchorId)
+    );
+  };
   return (
     <Slate
       editor={editor}
@@ -76,7 +92,9 @@ const RichTextExample = () => {
         );
         if (isAstChange) {
           const content = JSON.stringify(value);
+          const anchor = JSON.stringify(anchorList);
           localStorage.setItem("content", content);
+          localStorage.setItem("anchor", anchor);
           setSlateValue(value);
         }
       }}
@@ -100,7 +118,11 @@ const RichTextExample = () => {
       <Toolbar>
         <BlockButton format="link" icon="link" />
         <BlockButton format="link" icon="link_off" />
-        <BlockButton format="anchor" icon="anchor" />
+        <BlockButton
+          format="anchor"
+          icon="anchor"
+          callback={[addAnchorHandler, removeAnchorHandler]}
+        />
         <BlockButton format="image" icon="image" />
         <BlockButton format="video" icon="video_library" />
         <BlockButton format="embed" icon="html" />
@@ -146,6 +168,14 @@ const RichTextExample = () => {
         }}
       >
         serialize content
+      </button>
+      <button
+        onClick={() => {
+          const newId = prompt("New id?");
+          if (newId) addAnchorHandler("test", newId);
+        }}
+      >
+        add Anchor
       </button>
       <AnchorList listData={anchorList} />
     </Slate>

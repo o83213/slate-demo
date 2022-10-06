@@ -1,18 +1,21 @@
 import { css } from "@emotion/css";
 type Props = {
+  name: string;
   targetId: string;
 };
 
-const AnchorItem = ({ targetId }: Props) => {
+const AnchorItem = ({ targetId, name }: Props) => {
   return (
     <div
       className={css`
         height: 30px;
-        width: 60px;
-        border: 0.1rem solid red;
+        > a {
+          text-decoration: none;
+          font-size: 16px;
+        }
       `}
     >
-      <a href={`#${targetId}`}>{targetId}</a>
+      <a href={`#${targetId}`}>{name}</a>
     </div>
   );
 };

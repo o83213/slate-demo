@@ -13,66 +13,98 @@ import { HistoryEditor } from "slate-history";
 export type QuoteElement = {
   type: "quote";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 
 export type NumberedListElement = {
   type: "numbered-list";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 export type BulletedListElement = {
   type: "bulleted-list";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 
 export type HeadingElement = {
   type: "heading-one";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 
 export type HeadingTwoElement = {
   type: "heading-two";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 export type ListItemElement = {
   type: "list-item";
+  id?: string;
   children: Descendant[];
 };
 
 export type ImageElement = {
   type: "image";
   url: string;
+  id?: string;
   children: EmptyText[];
 };
 export type VideoElement = {
   type: "video";
   url: string;
+  id?: string;
   children: EmptyText[];
 };
-export type LinkElement = { type: "link"; url: string; children: Descendant[] };
+export type LinkElement = {
+  type: "link";
+  url: string;
+  id?: string;
+  children: Descendant[];
+};
 export type EmbedElement = {
   type: "embed";
   url: string;
+  id?: string;
   children: Descendant[];
 };
-
+export type AnchorElement = {
+  type: "anchor";
+  id: string;
+  id?: string;
+  children: Descendant[];
+};
 export type ParagraphElement = {
   type: "paragraph";
   align?: string;
+  id?: string;
   children: Descendant[];
 };
 
-export type TableElement = { type: "table"; children: TableRow[] };
+export type TableElement = { type: "table"; id?: string; children: TableRow[] };
 
-export type TableRowElement = { type: "table-row"; children: TableCell[] };
+export type TableRowElement = {
+  type: "table-row";
+  id?: string;
+  children: TableCell[];
+};
 
-export type TableCellElement = { type: "table-cell"; children: CustomText[] };
+export type TableCellElement = {
+  type: "table-cell";
+  id?: string;
+  children: CustomText[];
+};
 
-export type TitleElement = { type: "title"; children: Descendant[] };
+export type TitleElement = {
+  type: "title";
+  id?: string;
+  children: Descendant[];
+};
 
 type CustomElement =
   | QuoteElement
@@ -89,7 +121,8 @@ type CustomElement =
   | TableRowElement
   | TableCellElement
   | TitleElement
-  | EmbedElement;
+  | EmbedElement
+  | AnchorElement;
 
 export interface CustomText {
   bold?: boolean;

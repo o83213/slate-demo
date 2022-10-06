@@ -40,6 +40,7 @@ const TableElement = (props: any) => {
             border: 2px solid #ddd;
           }
         `}
+        id={element.id}
       >
         <tbody {...attributes}>{children}</tbody>
       </table>
