@@ -12,6 +12,7 @@ const CustomElement = (props: any) => {
       return (
         <q
           className={css`
+            display: block;
             border-left: 2px solid #ddd;
             margin-left: 0;
             margin-right: 0;

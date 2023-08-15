@@ -7,7 +7,6 @@ export const addAnchor = (
   removeFromList: Function
 ) => {
   const { selection } = editor;
-  const isCollapsed = selection && Range.isCollapsed(selection);
   if (!selection) return false;
   const anchorId = isBlockActive(editor, "anchor");
   console.log("anchorId", anchorId);

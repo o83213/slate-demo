@@ -6,17 +6,24 @@ type Props = {
 
 const AnchorItem = ({ targetId, name }: Props) => {
   return (
-    <div
+    <a
+      href={`#${targetId}`}
       className={css`
-        height: 30px;
-        > a {
-          text-decoration: none;
-          font-size: 16px;
+        border-radius: 9px;
+        transition: all 0.3s;
+        padding: 5px;
+        text-decoration: none;
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+        &:hover {
+          background-color: #22b8cf;
+          color: #fff;
         }
       `}
     >
-      <a href={`#${targetId}`}>{name}</a>
-    </div>
+      <div>{name}</div>
+    </a>
   );
 };
 export default AnchorItem;
